@@ -1,0 +1,21 @@
+<script>
+    function otmpd() {
+        document.body.innerHTML = "<div style='display: flex; justify-content: center; align-items: center; height: 100vh; background-color: black; color: white; text-align: center;'><h1>Please disable TamperMonkey!</h1></div>";
+    }
+    try {
+        new MutationObserver((Mutation) => {
+            Mutation.forEach((node) => {
+                if (node.addedNodes != null && node.addedNodes > 0) {
+                    for (let addedNode of node.addedNodes) {
+                        if (addedNode.data && String(addedNode.data).includes('==UserScript==') || addedNode.innerHTML && addedNode.innerHTML.includes('==UserScript==')) {
+                            otmpd();
+                        }
+                    }
+                }
+            })
+        }).observe(document, {
+            childList: true,
+            subtree: true,
+        })
+    } catch (error) { console.log(error) };
+</script>
